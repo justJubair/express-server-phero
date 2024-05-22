@@ -25,7 +25,9 @@ const createOrder = async (req: Request, res: Response) => {
 
 const getAllOrder = async (req: Request, res: Response) => {
   try {
-    const result = await orderServices.getAllOrderFromDB();
+    const email = req?.query.email as string;
+    // console.log(email);
+    const result = await orderServices.getAllOrderFromDB(email);
     //send response
     res.status(200).json({
       success: true,
