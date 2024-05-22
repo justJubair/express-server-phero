@@ -1,12 +1,49 @@
 import { Request, Response } from 'express';
 import { orderServices } from './order.service';
 import orderValidationSchema from './order.validation';
+import { IProduct } from '../product/product.interface';
+import { ProductServices } from '../product/product.service';
 
 const createOrder = async (req: Request, res: Response) => {
   try {
     const orderData = req?.body;
 
     const zodparsedData = orderValidationSchema.parse(orderData);
+
+    const product: IProduct | null =
+      await ProductServices.getSingleProductFromDB(
+        Number(zodparsedData.productId),
+      );
+
+    if (product) {
+      const orderedQuantity = zodparsedData.quantity;
+      const availableQuantity = product.inventory.quantity;
+
+      if (orderedQuantity > availableQuantity) {
+        return res.status(500).send({
+          success: false,
+          message: 'Insufficient quantity',
+        });
+      }
+
+      const newQuantity = availableQuantity - orderedQuantity;
+
+      const newInventory = {
+        quantity: newQuantity,
+        inStock: newQuantity > 0,
+      };
+
+      await ProductServices.updateProductInventoryIntoDB(
+        Number(zodparsedData.productId),
+        newInventory,
+      );
+    } else {
+      return res.status(404).send({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+
     const result = await orderServices.createOrderIntoDB(zodparsedData);
 
     res.status(200).json({

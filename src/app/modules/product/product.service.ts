@@ -1,4 +1,4 @@
-import { IProduct } from './product.interface';
+import { IInventory, IProduct } from './product.interface';
 import { ProductModel } from './product.model';
 
 const createProductIntoDB = async (productData: IProduct) => {
@@ -31,6 +31,19 @@ const updateProductIntoDB = async (
   return result;
 };
 
+const updateProductInventoryIntoDB = async (
+  id: number,
+  updatedInventoryData: IInventory,
+) => {
+  const updatedInventory = {
+    $set: {
+      inventory: updatedInventoryData,
+    },
+  };
+  const result = await ProductModel.updateOne({ id }, updatedInventory);
+  return result;
+};
+
 const deleteSingleProductFromDB = async (id: Number) => {
   const result = await ProductModel.deleteOne({ id });
   return result;
@@ -50,4 +63,5 @@ export const ProductServices = {
   getSingleProductFromDB,
   updateProductIntoDB,
   deleteSingleProductFromDB,
+  updateProductInventoryIntoDB,
 };
