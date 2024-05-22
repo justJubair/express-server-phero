@@ -14,10 +14,15 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Product is created successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }
@@ -34,10 +39,15 @@ const getAllProducts = async (req: Request, res: Response) => {
       message: 'Products are retrived successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }
@@ -45,7 +55,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 const getSingleProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req?.params;
+    const { productId } = req.params;
     const result = await ProductServices.getSingleProductFromDB(
       Number(productId),
     );
@@ -56,10 +66,15 @@ const getSingleProduct = async (req: Request, res: Response) => {
       message: result === null ? 'Not found' : 'Product retrived successfully',
       data: result === null ? 'No data found' : result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }
@@ -67,7 +82,7 @@ const getSingleProduct = async (req: Request, res: Response) => {
 
 const updateSingleProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req?.params;
+    const { productId } = req.params;
     const updatedProductData = req?.body;
 
     const result = await ProductServices.updateProductIntoDB(
@@ -82,10 +97,15 @@ const updateSingleProduct = async (req: Request, res: Response) => {
       data: updatedProductData,
       result: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }
@@ -93,7 +113,7 @@ const updateSingleProduct = async (req: Request, res: Response) => {
 
 const deleteSingleProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req?.params;
+    const { productId } = req.params;
     const result = await ProductServices.deleteSingleProductFromDB(
       Number(productId),
     );
@@ -104,10 +124,15 @@ const deleteSingleProduct = async (req: Request, res: Response) => {
       message: result === null ? 'Not found' : 'Product deleted successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }

@@ -51,10 +51,15 @@ const createOrder = async (req: Request, res: Response) => {
       message: 'Product is created successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }
@@ -71,10 +76,15 @@ const getAllOrder = async (req: Request, res: Response) => {
       message: 'Products are retrived successfully',
       data: result,
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    let errorMessage = 'something went wrong';
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
     res.status(500).json({
       success: false,
-      message: err.message || 'something went wrong',
+      message: errorMessage,
       error: err,
     });
   }

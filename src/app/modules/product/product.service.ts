@@ -44,7 +44,7 @@ const updateProductInventoryIntoDB = async (
   return result;
 };
 
-const deleteSingleProductFromDB = async (id: Number) => {
+const deleteSingleProductFromDB = async (id: number) => {
   const result = await ProductModel.deleteOne({ id });
   return result;
 };
