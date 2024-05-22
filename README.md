@@ -2,6 +2,8 @@
 
 This repository contains an E-commerce API built with Express, TypeScript, Mongoose, and Zod validation. It provides basic CRUD operations for managing products and orders. The project is configured with ESLint and Prettier for code quality and consistency.
 
+Live server: [Link](https://express-server-phero.vercel.app)
+
 ## Features
 
 - Express.js for handling HTTP requests and routing
