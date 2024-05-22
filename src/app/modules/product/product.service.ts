@@ -6,11 +6,6 @@ const createProductIntoDB = async (productData: IProduct) => {
   return result;
 };
 
-const getAllProductsFromDB = async () => {
-  const result = await ProductModel.find();
-  return result;
-};
-
 const getSingleProductFromDB = async (id: number) => {
   const result = await ProductModel.findOne({ id });
   return result;
@@ -38,6 +33,14 @@ const updateProductIntoDB = async (
 
 const deleteSingleProductFromDB = async (id: Number) => {
   const result = await ProductModel.deleteOne({ id });
+  return result;
+};
+
+const getAllProductsFromDB = async (searchTerm = '') => {
+  const query = {
+    name: { $regex: searchTerm, $options: 'i' },
+  };
+  const result = await ProductModel.find(query);
   return result;
 };
 
