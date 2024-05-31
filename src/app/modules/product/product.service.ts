@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import { IInventory, IProduct } from './product.interface';
 import { ProductModel } from './product.model';
 
@@ -6,18 +7,17 @@ const createProductIntoDB = async (productData: IProduct) => {
   return result;
 };
 
-const getSingleProductFromDB = async (id: number) => {
-  const result = await ProductModel.findOne({ id });
+const getSingleProductFromDB = async (id: string) => {
+  const result = await ProductModel.findById(id).exec();
   return result;
 };
 
 const updateProductIntoDB = async (
-  id: number,
+  id: string,
   updatedProductData: IProduct,
 ) => {
   const updatedProduct = {
     $set: {
-      id: updatedProductData.id,
       name: updatedProductData.name,
       description: updatedProductData.description,
       price: updatedProductData.price,
@@ -27,12 +27,12 @@ const updateProductIntoDB = async (
       inventory: updatedProductData.inventory,
     },
   };
-  const result = await ProductModel.updateOne({ id }, updatedProduct);
+  const result = await ProductModel.updateOne({ _id: id }, updatedProduct);
   return result;
 };
 
 const updateProductInventoryIntoDB = async (
-  id: number,
+  id: string,
   updatedInventoryData: IInventory,
 ) => {
   const updatedInventory = {
@@ -40,12 +40,12 @@ const updateProductInventoryIntoDB = async (
       inventory: updatedInventoryData,
     },
   };
-  const result = await ProductModel.updateOne({ id }, updatedInventory);
+  const result = await ProductModel.updateOne({ _id: id }, updatedInventory);
   return result;
 };
 
-const deleteSingleProductFromDB = async (id: number) => {
-  const result = await ProductModel.deleteOne({ id });
+const deleteSingleProductFromDB = async (id: string) => {
+  const result = await ProductModel.deleteOne({ _id: id });
   return result;
 };
 

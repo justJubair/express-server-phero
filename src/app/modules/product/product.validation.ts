@@ -14,7 +14,6 @@ const inventoryValidationSchema = z.object({
 
 // Product Schema Validation
 const productValidationSchema = z.object({
-  id: z.number().int().positive('ID must be a positive integer'),
   name: z.string().max(25).trim(),
   description: z.string().trim(),
   price: z.number().positive('Price cannot be negative'),

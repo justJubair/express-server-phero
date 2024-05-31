@@ -11,9 +11,7 @@ const createOrder = async (req: Request, res: Response) => {
     const zodparsedData = orderValidationSchema.parse(orderData);
 
     const product: IProduct | null =
-      await ProductServices.getSingleProductFromDB(
-        Number(zodparsedData.productId),
-      );
+      await ProductServices.getSingleProductFromDB(zodparsedData.productId);
 
     if (product) {
       const orderedQuantity = zodparsedData.quantity;
@@ -34,7 +32,7 @@ const createOrder = async (req: Request, res: Response) => {
       };
 
       await ProductServices.updateProductInventoryIntoDB(
-        Number(zodparsedData.productId),
+        zodparsedData.productId,
         newInventory,
       );
     } else {

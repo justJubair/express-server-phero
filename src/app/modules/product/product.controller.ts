@@ -56,9 +56,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 const getSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const result = await ProductServices.getSingleProductFromDB(
-      Number(productId),
-    );
+    const result = await ProductServices.getSingleProductFromDB(productId);
 
     //send response
     res.status(200).json({
@@ -86,7 +84,7 @@ const updateSingleProduct = async (req: Request, res: Response) => {
     const updatedProductData = req?.body;
 
     const result = await ProductServices.updateProductIntoDB(
-      Number(productId),
+      productId,
       updatedProductData,
     );
 
@@ -114,9 +112,7 @@ const updateSingleProduct = async (req: Request, res: Response) => {
 const deleteSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const result = await ProductServices.deleteSingleProductFromDB(
-      Number(productId),
-    );
+    const result = await ProductServices.deleteSingleProductFromDB(productId);
 
     //send response
     res.status(200).json({
