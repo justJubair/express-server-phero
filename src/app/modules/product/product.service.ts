@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongoose';
 import { IInventory, IProduct } from './product.interface';
 import { ProductModel } from './product.model';
 
